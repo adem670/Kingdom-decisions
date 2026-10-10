@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b2c">
+<meta name="description" content="الجريدة الرسمية لمملكة PeaceLand - القرارات والأوامر والمنشورات الرسمية">
+<title>الجريدة الرسمية | مملكة PeaceLand</title>
+
+<style>
+:root {
+  --green:#123b2c;
+  --green2:#20543d;
+  --gold:#d5b56a;
+  --cream:#f7f5ee;
+  --white:#fff;
+  --text:#25352d;
+  --muted:#718077;
+  --border:#e5e8df;
+}
+*{box-sizing:border-box}
+body {
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  line-height:1.8;
+}
+a{color:inherit}
+.topline{height:5px;background:var(--gold)}
+header{
+  background:var(--green);
+  color:white;
+  padding:24px 16px 0;
+}
+.wrap{max-width:1120px;margin:auto}
+.brand{
+  display:flex;align-items:center;gap:15px;
+  padding-bottom:20px;
+}
+.emblem{
+  width:62px;height:62px;border:2px solid var(--gold);
+  border-radius:50%;display:grid;place-items:center;
+  color:var(--gold);font-size:32px;flex-shrink:0;
+}
+.brand h1{font-size:clamp(20px,4vw,30px);margin:0}
+.brand p{margin:2px 0 0;color:#e4d9b9;font-size:13px}
+nav{
+  display:flex;flex-wrap:wrap;gap:6px;
+  border-top:1px solid #ffffff24;padding:10px 0;
+}
+nav a{
+  text-decoration:none;padding:7px 12px;border-radius:6px;
+  font-size:14px;color:#f5f5ed;
+}
+nav a:hover{background:#ffffff16}
+.hero{
+  background:linear-gradient(135deg,#174833,#0d2e23);
+  color:white;padding:38px 18px;text-align:center;
+  border-bottom:4px solid var(--gold);
+}
+.hero .seal{font-size:38px}
+.hero h2{font-size:clamp(25px,5vw,38px);margin:5px 0}
+.hero p{margin:5px auto;color:#e5e9df;max-width:650px}
+main{max-width:1120px;margin:28px auto;padding:0 16px}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-bottom:24px;
+}
+.stat{
+  background:white;border:1px solid var(--border);
+  padding:16px;border-radius:12px;text-align:center;
+}
+.stat strong{display:block;color:var(--green);font-size:25px}
+.stat span{font-size:13px;color:var(--muted)}
+.panel{
+  background:white;border:1px solid var(--border);
+  border-radius:14px;padding:20px;margin-bottom:22px;
+  box-shadow:0 4px 16px #152c1b08;
+}
+.section-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:21px;color:var(--green);margin:0 0 15px;
+}
+.section-title:before{
+  content:"";width:5px;height:25px;
+  background:var(--gold);border-radius:4px;
+}
+.filters{
+  display:grid;grid-template-columns:2fr 1fr 1fr auto;
+  gap:10px;
+}
+input,select,button{
+  width:100%;min-height:46px;padding:10px 12px;
+  font:inherit;border:1px solid #dce2d9;border-radius:8px;
+  background:white;color:var(--text);
+}
+input:focus,select:focus{outline:2px solid #d5b56a80}
+button{
+  cursor:pointer;background:var(--green);color:white;
+  border:0;font-weight:600;padding:10px 18px;
+}
+button:hover{background:var(--green2)}
+.resultline{
+  display:flex;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;color:var(--muted);font-size:13px;
+  margin:16px 0 10px;
+}
+.cards{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.card{
+  border:1px solid var(--border);border-radius:12px;
+  background:white;padding:18px;min-width:0;
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:0 7px 20px #153b2410}
+.badge{
+  display:inline-block;background:#edf4ed;color:var(--green);
+  border-radius:20px;padding:3px 10px;font-size:12px;
+}
+.ref{color:#92712d;font-size:13px;margin-right:6px}
+.card h3{font-size:19px;line-height:1.6;margin:12px 0 7px}
+.summary{color:#58665d;font-size:14px;white-space:pre-wrap}
+.meta{font-size:12px;color:var(--muted);margin-top:12px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.actions button,.actions a{
+  display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;padding:8px 12px;border-radius:7px;
+  font-size:13px;min-height:38px;border:1px solid var(--green);
+}
+.actions a{background:white;color:var(--green)}
+.actions button{width:auto}
+.empty,.loading,.error{
+  text-align:center;padding:35px 12px;color:var(--muted);
+}
+.error{color:#a22}
+.pagination{
+  display:flex;justify-content:center;gap:10px;
+  margin-top:20px;
+}
+.pagination button{width:auto;min-width:100px}
+footer{
+  background:var(--green);color:#f4f0df;
+  margin-top:45px;padding:28px 16px;text-align:center;
+  border-top:4px solid var(--gold);
+}
+footer p{margin:4px;font-size:13px}
+footer a{color:var(--gold)}
+dialog{
+  border:0;border-radius:14px;padding:0;
+  max-width:720px;width:calc(100% - 28px);
+  max-height:85vh;color:var(--text);
+  box-shadow:0 20px 70px #0004;
+}
+dialog::backdrop{background:#061b12b8}
+.modal-head{
+  background:var(--green);color:white;padding:18px 20px;
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+.modal-head h3{margin:0;font-size:20px}
+.modal-head button{width:auto;background:#ffffff20;min-height:36px}
+.modal-body{padding:20px;white-space:pre-wrap;overflow-wrap:anywhere}
+.doclink{display:inline-block;margin-top:15px;color:var(--green)}
+@media(max-width:700px){
+ .filters{grid-template-columns:1fr 1fr}
+ .filters input{grid-column:1/-1}
+ .cards{grid-template-columns:1fr}
+ .stats{gap:7px}
+ .stat{padding:12px 5px}
+ .stat strong{font-size:21px}
+ .brand{align-items:flex-start}
+}
+@media(max-width:380px){
+ .filters{grid-template-columns:1fr}
+ .filters input{grid-column:auto}
+}
+</style>
+</head>
+
+<body>
+<div class="topline"></div>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="emblem" aria-hidden="true">⚖</div>
+      <div>
+        <h1>مملكة PeaceLand</h1>
+        <p>الجريدة الرسمية للمملكة</p>
+      </div>
+    </div>
+    <nav aria-label="التنقل الرئيسي">
+      <a href="https://endearing-axolotl-b97f7f.netlify.app/">الرئيسية</a>
+      <a href="#publications">القرارات والمنشورات</a>
+      <a href="#search">البحث في الأرشيف</a>
+      <a href="https://adem670.github.io/Kingdom-admin/">الإدارة الملكية</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="seal" aria-hidden="true">📜</div>
+    <h2>الجريدة الرسمية</h2>
+    <p>البوابة المخصّصة للاطلاع على القرارات والمنشورات الرسمية المنشورة لمملكة PeaceLand.</p>
+  </div>
+</section>
+
+<main>
+  <section class="stats" aria-label="إحصائيات المنشورات">
+    <div class="stat">
+      <strong id="totalCount">—</strong>
+      <span>إجمالي المنشورات المعروضة</span>
+    </div>
+    <div class="stat">
+      <strong id="decisionCount">—</strong>
+      <span>القرارات</span>
+    </div>
+    <div class="stat">
+      <strong id="yearCount">—</strong>
+      <span>سنوات الأرشيف</span>
+    </div>
+  </section>
+
+  <section class="panel" id="search">
+    <h2 class="section-title">البحث في الجريدة الرسمية</h2>
+    <div class="filters">
+      <input id="searchInput" type="search"
+        placeholder="ابحث بعنوان القرار أو رقمه أو محتواه..."
+        aria-label="البحث في المنشورات">
+      <select id="typeFilter" aria-label="نوع المنشور">
+        <option value="">جميع الأنواع</option>
+        <option value="decision">القرارات</option>
+        <option value="speech">الخطابات</option>
+      </select>
+      <select id="yearFilter" aria-label="السنة">
+        <option value="">جميع السنوات</option>
+      </select>
+      <button id="resetBtn" type="button">إعادة ضبط</button>
+    </div>
+    <div class="resultline">
+      <span id="resultCount">جارٍ التحميل...</span>
+      <span>المنشورات المنشورة فقط</span>
+    </div>
+  </section>
+
+  <section id="publications">
+    <h2 class="section-title">المنشورات الرسمية</h2>
+    <div id="publicationList" class="cards">
+      <div class="loading">⏳ جارٍ تحميل المنشورات الرسمية...</div>
+    </div>
+    <div class="pagination" id="pagination" hidden>
+      <button id="prevBtn" type="button">السابق</button>
+      <button id="nextBtn" type="button">التالي</button>
+    </div>
+  </section>
+</main>
+
+<dialog id="detailDialog">
+  <div class="modal-head">
+    <h3 id="modalTitle">تفاصيل المنشور</h3>
+    <button id="closeModal" type="button" aria-label="إغلاق">إغلاق ✕</button>
+  </div>
+  <div class="modal-body">
+    <div id="modalMeta" class="meta"></div>
+    <div id="modalContent"></div>
+    <a id="modalDocument" class="doclink" target="_blank"
+       rel="noopener noreferrer" hidden>📄 فتح الوثيقة المرفقة</a>
+  </div>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <p><strong>مملكة PeaceLand — الجريدة الرسمية</strong></p>
+    <p>بوابة إلكترونية للاطلاع على المنشورات الرسمية المنشورة.</p>
+    <p><a href="https://endearing-axolotl-b97f7f.netlify.app/">العودة إلى الموقع الرسمي للمملكة</a></p>
+    <p>© <span id="currentYear"></span> — جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<script type="module">
+import { createClient } from
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://gfjlglniyaerdcjgefgi.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UTEgMhPFF34jjCIeX39Nhg_8Tf_cWiX";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = id => document.getElementById(id);
+const PAGE_SIZE = 10;
+let allItems = [];
+let filteredItems = [];
+let currentPage = 1;
+
+$("currentYear").textContent = new Date().getFullYear();
+
+function safeText(value) {
+  return value == null ? "" : String(value);
+}
+
+function formatDate(value) {
+  if (!value) return "غير محدّد";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "غير محدّد";
+  return new Intl.DateTimeFormat("ar", {
+    year: "numeric", month: "long", day: "numeric"
+  }).format(d);
+}
+
+function itemDate(item) {
+  return item.published_at || item.created_at || "";
+}
+
+function typeLabel(type) {
+  const labels = {
+    decision: "قرار رسمي",
+    speech: "خطاب رسمي"
+  };
+  return labels[type] || "منشور رسمي";
+}
+
+function addText(parent, tag, text, className = "") {
+  const node = document.createElement(tag);
+  node.textContent = text;
+  if (className) node.className = className;
+  parent.appendChild(node);
+  return node;
+}
+
+function buildDocumentLink(url, label = "📄 فتح الوثيقة") {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      return null;
+    }
+    const link = document.createElement("a");
+    link.href = parsed.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = label;
+    return link;
+  } catch {
+    return null;
+  }
+}
+
+function renderStats() {
+  $("totalCount").textContent = allItems.length;
+  $("decisionCount").textContent =
+    allItems.filter(x => x.publication_type === "decision").length;
+
+  const years = new Set(
+    allItems.map(x => {
+      const d = new Date(itemDate(x));
+      return Number.isNaN(d.getTime()) ? "" : d.getFullYear();
+    }).filter(Boolean)
+  );
+
+  $("yearCount").textContent = years.size;
+
+  const yearSelect = $("yearFilter");
+  yearSelect.replaceChildren();
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "جميع السنوات";
+  yearSelect.appendChild(defaultOption);
+
+  [...years].sort((a,b) => b-a).forEach(year => {
+    const option = document.createElement("option");
+    option.value = String(year);
+    option.textContent = String(year);
+    yearSelect.appendChild(option);
+  });
+}
+
+function renderCards() {
+  const list = $("publicationList");
+  list.replaceChildren();
+
+  $("resultCount").textContent =
+    `عدد النتائج: ${filteredItems.length}`;
+
+  if (!filteredItems.length) {
+    addText(list, "div",
+      allItems.length
+        ? "لا توجد منشورات تطابق البحث. جرّب كلمات أخرى."
+        : "لا توجد منشورات رسمية منشورة حاليًا.",
+      "empty");
+    $("pagination").hidden = true;
+    return;
+  }
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filteredItems.slice(start, start + PAGE_SIZE);
+
+  pageItems.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const badges = document.createElement("div");
+    const badge = addText(badges, "span",
+      typeLabel(item.publication_type), "badge");
+    card.appendChild(badges);
+
+    if (item.reference_number) {
+      addText(badges, "span",
+        `رقم: ${safeText(item.reference_number)}`, "ref");
+    }
+
+    addText(card, "h3", safeText(item.title) || "منشور رسمي بلا عنوان");
+
+    if (item.summary) {
+      addText(card, "div", safeText(item.summary), "summary");
+    } else if (item.content) {
+      const preview = safeText(item.content);
+      addText(card, "div",
+        preview.length > 220 ? preview.slice(0,220) + "…" : preview,
+        "summary");
+    } else {
+      addText(card, "div", "لا يوجد ملخّص مرفق.", "summary");
+    }
+
+    addText(card, "div", `تاريخ النشر: ${formatDate(itemDate(item))}`, "meta");
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const details = document.createElement("button");
+    details.type = "button";
+    details.textContent = "قراءة التفاصيل";
+    details.addEventListener("click", () => openDetails(item));
+    actions.appendChild(details);
+
+    const docLink = buildDocumentLink(item.document_url);
+    if (docLink) actions.appendChild(docLink);
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  const totalPages = Math.ceil(filteredItems.length / PAGE_SIZE);
+  $("pagination").hidden = totalPages <= 1;
+  $("prevBtn").disabled = currentPage <= 1;
+  $("nextBtn").disabled = currentPage >= totalPages;
+}
+
+function openDetails(item) {
+  $("modalTitle").textContent = safeText(item.title) || "تفاصيل المنشور";
+  $("modalMeta").textContent =
+    `${typeLabel(item.publication_type)} — رقم: ${safeText(item.reference_number) || "غير محدّد"} — تاريخ النشر: ${formatDate(itemDate(item))}`;
+
+  $("modalContent").textContent =
+    safeText(item.content) || safeText(item.summary) ||
+    "لا يوجد محتوى إضافي لهذا المنشور.";
+
+  const link = $("modalDocument");
+  const safeLink = buildDocumentLink(item.document_url, "📄 فتح الوثيقة المرفقة");
+  link.hidden = !safeLink;
+  link.removeAttribute("href");
+
+  if (safeLink) {
+    link.href = safeLink.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  }
+
+  $("detailDialog").showModal();
+}
+
+function applyFilters() {
+  const query = $("searchInput").value.trim().toLocaleLowerCase();
+  const type = $("typeFilter").value;
+  const year = $("yearFilter").value;
+
+  filteredItems = allItems.filter(item => {
+    const searchable = [
+      item.title, item.reference_number, item.summary, item.content
+    ].map(safeText).join(" ").toLocaleLowerCase();
+
+    const d = new Date(itemDate(item));
+    const itemYear = Number.isNaN(d.getTime()) ? "" : String(d.getFullYear());
+
+    return (!query || searchable.includes(query))
+      && (!type || item.publication_type === type)
+      && (!year || itemYear === year);
+  });
+
+  currentPage = 1;
+  renderCards();
+}
+
+async function loadPublications() {
+  const list = $("publicationList");
+  list.replaceChildren();
+  addText(list, "div", "⏳ جارٍ تحميل المنشورات الرسمية...", "loading");
+
+  try {
+    const { data, error } = await supabase
+      .from("royal_publications")
+      .select("id,title,publication_type,reference_number,summary,content,document_url,status,created_at,published_at")
+      .eq("status", "published")
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    allItems = data || [];
+    renderStats();
+    applyFilters();
+  } catch (error) {
+    console.error("Unable to load public publications:", error);
+    list.replaceChildren();
+
+    addText(list, "div",
+      "تعذّر تحميل المنشورات. تأكّد من اتصال الإنترنت وصلاحيات القراءة العامة في Supabase، ثم أعد المحاولة.",
+      "error");
+
+    $("resultCount").textContent = "حدث خطأ أثناء التحميل";
+
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.textContent = "إعادة المحاولة";
+    retry.style.maxWidth = "180px";
+    retry.style.margin = "0 auto 20px";
+    retry.addEventListener("click", loadPublications);
+    list.appendChild(retry);
+  }
+}
+
+$("searchInput").addEventListener("input", applyFilters);
+$("typeFilter").addEventListener("change", applyFilters);
+$("yearFilter").addEventListener("change", applyFilters);
+
+$("resetBtn").addEventListener("click", () => {
+  $("searchInput").value = "";
+  $("typeFilter").value = "";
+  $("yearFilter").value = "";
+  applyFilters();
+});
+
+$("prevBtn").addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderCards();
+  }
+});
+
+$("nextBtn").addEventListener("click", () => {
+  if (currentPage < Math.ceil(filteredItems.length / PAGE_SIZE)) {
+    currentPage++;
+    renderCards();
+  }
+});
+
+$("closeModal").addEventListener("click", () => {
+  $("detailDialog").close();
+});
+
+$("detailDialog").addEventListener("click", event => {
+  if (event.target === $("detailDialog")) {
+    $("detailDialog").close();
+  }
+});
+
+loadPublications();
+</script>
+</body>
+</html>
