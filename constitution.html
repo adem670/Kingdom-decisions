@@ -1,173 +1,363 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#123b2c">
-<title>دستور مملكة أرض السلام</title>
-<style>
-:root {
-  --green:#123b2c;
-  --green2:#20543d;
-  --gold:#d5b56a;
-  --cream:#f7f5ee;
-  --text:#25352d;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Tahoma,Arial,sans-serif;
-  background:var(--cream);
-  color:var(--text);
-  line-height:2;
-}
-.topline{height:6px;background:var(--gold)}
-header{
-  background:var(--green);
-  color:white;
-  text-align:center;
-  padding:35px 18px;
-  border-bottom:4px solid var(--gold);
-}
-header .symbol{font-size:42px}
-header h1{margin:8px 0;font-size:clamp(24px,5vw,38px)}
-header p{margin:0;color:#e7dec5}
-main{
-  max-width:950px;
-  margin:28px auto;
-  padding:0 16px;
-}
-.panel{
-  background:white;
-  border:1px solid #e5e8df;
-  border-radius:14px;
-  padding:clamp(18px,4vw,36px);
-  box-shadow:0 4px 18px #152c1b0b;
-}
-.status{
-  text-align:center;
-  color:#718077;
-  padding:25px 10px;
-}
-.content{
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-  font-size:17px;
-}
-.actions{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:22px 0;
-}
-.actions a,.actions button{
-  display:inline-block;
-  padding:10px 18px;
-  border-radius:8px;
-  border:1px solid var(--green);
-  text-decoration:none;
-  font:inherit;
-  cursor:pointer;
-}
-.actions a{
-  background:var(--green);
-  color:white;
-}
-.actions button{
-  background:white;
-  color:var(--green);
-}
-footer{
-  background:var(--green);
-  color:white;
-  text-align:center;
-  padding:22px;
-  border-top:4px solid var(--gold);
-}
-footer a{color:var(--gold)}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123b2a">
+
+  <title>دستور مملكة أرض السلام | الجريدة الرسمية</title>
+
+  <style>
+    :root {
+      --green: #123b2a;
+      --green-light: #1c513b;
+      --gold: #c9a44c;
+      --cream: #f8f5ec;
+      --white: #ffffff;
+      --text: #26352d;
+      --muted: #69766d;
+      --border: #e5e0d3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--green), #09251a);
+      color: white;
+      text-align: center;
+      padding: 32px 16px;
+      border-bottom: 5px solid var(--gold);
+    }
+
+    .seal {
+      width: 76px;
+      height: 76px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--gold);
+      font-size: 35px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(24px, 5vw, 36px);
+    }
+
+    header p {
+      margin: 5px 0;
+      color: #eee3c6;
+    }
+
+    .container {
+      width: min(1000px, 94%);
+      margin: 25px auto 50px;
+    }
+
+    .back {
+      display: inline-block;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .document {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px #123b2a0d;
+    }
+
+    .document-header {
+      text-align: center;
+      padding: 28px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 30px;
+      background: #e7f2e9;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .document-header h2 {
+      color: var(--green);
+      margin: 12px 0 5px;
+      font-size: clamp(23px, 4vw, 32px);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 16px;
+      background: #fbfaf6;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tools input {
+      flex: 1 1 240px;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #d8d5c9;
+      border-radius: 8px;
+      font: inherit;
+      background: white;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--green);
+      color: white;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    button:hover {
+      background: var(--green-light);
+    }
+
+    #status {
+      margin: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #fff8e5;
+      color: #775b1c;
+      text-align: center;
+    }
+
+    #constitution {
+      padding: clamp(18px, 4vw, 38px);
+      min-height: 240px;
+      overflow-wrap: anywhere;
+    }
+
+    #constitution h1,
+    #constitution h2,
+    #constitution h3 {
+      color: var(--green);
+    }
+
+    #constitution h2 {
+      margin-top: 30px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    #constitution p {
+      margin: 12px 0;
+    }
+
+    .article {
+      margin: 18px 0;
+      padding: 16px;
+      border-right: 4px solid var(--gold);
+      background: #fcfbf7;
+      border-radius: 5px;
+    }
+
+    .article h3 {
+      margin-top: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 12px;
+      background: var(--green);
+      color: #eee3c6;
+      font-size: 13px;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header, footer, .tools, .back, #status {
+        display: none !important;
+      }
+
+      .container {
+        width: 100%;
+        margin: 0;
+      }
+
+      .document {
+        border: none;
+        box-shadow: none;
+      }
+
+      #constitution {
+        padding: 0;
+      }
+
+      .article {
+        break-inside: avoid;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="topline"></div>
+  <header>
+    <div class="seal" aria-hidden="true">♛</div>
+    <h1>مملكة أرض السلام</h1>
+    <p>السلام • العدل • الكرامة</p>
+    <p>الجريدة الرسمية للمملكة</p>
+  </header>
 
-<header>
-  <div class="symbol">📜</div>
-  <h1>دستور مملكة أرض السلام</h1>
-  <p>الوثيقة الدستورية الأساسية للمملكة</p>
-</header>
+  <main class="container">
+    <a class="back" href="./index.html">← العودة إلى الجريدة الرسمية</a>
 
-<main>
-  <div class="actions">
-    <a href="./">العودة إلى الجريدة الرسمية</a>
-    <button id="printButton" type="button">طباعة الدستور / حفظ PDF</button>
-  </div>
+    <section class="document">
+      <div class="document-header">
+        <span class="badge">وثيقة دستورية رسمية</span>
+        <h2>دستور مملكة أرض السلام</h2>
+        <div class="meta">دستور رقم 001 لسنة 2026</div>
+        <div class="meta">العاصمة: دار السلام</div>
+      </div>
 
-  <section class="panel">
-    <div id="status" class="status">جارٍ تحميل نص الدستور الكامل...</div>
-    <article id="constitution" class="content"></article>
-  </section>
+      <div class="tools">
+        <input
+          id="search"
+          type="search"
+          placeholder="ابحث داخل نص الدستور..."
+          aria-label="البحث داخل الدستور"
+        >
+        <button onclick="window.print()">طباعة الدستور</button>
+      </div>
 
-  <div class="actions">
-    <a href="./">العودة إلى الجريدة الرسمية</a>
-  </div>
-</main>
+      <div id="status">جارٍ تحميل نص الدستور...</div>
+      <article id="constitution"></article>
+    </section>
+  </main>
 
-<footer>
-  <p>مملكة PeaceLand — الدستور الأساسي</p>
-  <p><a href="https://endearing-axolotl-b97f7f.netlify.app/">الموقع الرسمي للمملكة</a></p>
-</footer>
+  <footer>
+    © مملكة أرض السلام — الجريدة الرسمية
+  </footer>
 
-<script type="module">
-import { createClient } from
-  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  <script>
+    /*
+      استعمل إعدادات Supabase الموجودة في موقعك الحالي.
+      لا تضع service_role key هنا؛ استعمل anon/public key فقط.
+    */
+    const SUPABASE_URL = "ضع_رابط_مشروع_Supabase_هنا";
+    const SUPABASE_ANON_KEY = "ضع_مفتاح_anon_الموجود_في_موقعك_هنا";
 
-const supabase = createClient(
-  "https://gfjlglniyaerdcjgefgi.supabase.co",
-  "sb_publishable_UTEgMhPFF34jjCIeX39Nhg_8Tf_cWiX"
-);
+    const PUBLICATION_ID = "3b2562aa-3c98-4672-b970-f2286f6904fc";
 
-const documentId = "3b2562aa-3c98-4672-b970-f2286f6904fc";
-const status = document.getElementById("status");
-const content = document.getElementById("constitution");
+    const constitution = document.getElementById("constitution");
+    const statusBox = document.getElementById("status");
+    const searchInput = document.getElementById("search");
 
-document.getElementById("printButton").addEventListener("click", () => {
-  window.print();
-});
+    async function loadConstitution() {
+      try {
+        if (
+          SUPABASE_URL.includes("ضع_رابط") ||
+          SUPABASE_ANON_KEY.includes("ضع_مفتاح")
+        ) {
+          throw new Error(
+            "يلزم إدخال إعدادات Supabase الموجودة في ملفات موقعك."
+          );
+        }
 
-async function loadConstitution() {
-  try {
-    const { data, error } = await supabase
-      .from("royal_publications")
-      .select("title,content,summary,status")
-      .eq("id", documentId)
-      .eq("status", "published")
-      .maybeSingle();
+        const endpoint =
+          SUPABASE_URL.replace(/\/$/, "") +
+          "/rest/v1/royal_publications" +
+          "?id=eq." + encodeURIComponent(PUBLICATION_ID) +
+          "&status=eq.published" +
+          "&select=title,content,reference_number";
 
-    if (error) throw error;
+        const response = await fetch(endpoint, {
+          headers: {
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          }
+        });
 
-    if (!data) {
-      status.textContent =
-        "لم يتم العثور على الدستور المنشور. تأكّد من صلاحيات القراءة العامة في Supabase.";
-      return;
+        if (!response.ok) {
+          throw new Error(
+            "تعذّر تحميل الدستور. رمز الخطأ: " + response.status +
+            ". تثبّت من صلاحيات القراءة في Supabase."
+          );
+        }
+
+        const rows = await response.json();
+
+        if (!rows.length || !rows[0].content) {
+          throw new Error(
+            "لم يُعثر على نص دستوري منشور بهذا المعرّف."
+          );
+        }
+
+        /*
+          textContent يعرض النص كما هو، دون تشغيل HTML
+          قد يكون موجودًا داخل محتوى الوثيقة.
+        */
+        constitution.textContent = rows[0].content;
+        statusBox.hidden = true;
+      } catch (error) {
+        statusBox.textContent = error.message;
+        statusBox.style.background = "#fff0ed";
+        statusBox.style.color = "#8a2d20";
+        console.error(error);
+      }
     }
 
-    document.title = data.title || "دستور مملكة أرض السلام";
-    content.textContent = data.content || data.summary || "";
-    status.hidden = true;
+    searchInput.addEventListener("input", function () {
+      const query = this.value.trim();
 
-    if (!content.textContent.trim()) {
-      status.hidden = false;
-      status.textContent = "لا يوجد نص متاح لهذا المنشور.";
-    }
-  } catch (error) {
-    console.error(error);
-    status.textContent =
-      "تعذّر تحميل الدستور. تحقّق من الاتصال بالإنترنت وصلاحيات القراءة العامة.";
-  }
-}
+      constitution.querySelectorAll(".search-match").forEach(element => {
+        element.classList.remove("search-match");
+      });
 
-loadConstitution();
-</script>
+      if (!query) return;
+
+      const walker = document.createTreeWalker(
+        constitution,
+        NodeFilter.SHOW_TEXT
+      );
+
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue.toLowerCase().includes(query.toLowerCase())) {
+          node.parentElement?.classList.add("search-match");
+          node.parentElement?.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+          break;
+        }
+      }
+    });
+
+    loadConstitution();
+  </script>
 </body>
 </html>
