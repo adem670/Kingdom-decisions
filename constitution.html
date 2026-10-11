@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123b2a">
 
   <title>دستور مملكة أرض السلام | الجريدة الرسمية</title>
@@ -13,7 +13,7 @@
       --green-light: #1c513b;
       --gold: #c9a44c;
       --cream: #f8f5ec;
-      --white: #ffffff;
+      --white: #fff;
       --text: #26352d;
       --muted: #69766d;
       --border: #e5e0d3;
@@ -46,8 +46,8 @@
       border-radius: 50%;
       margin: 0 auto 12px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       color: var(--gold);
       font-size: 35px;
     }
@@ -156,34 +156,12 @@
       padding: clamp(18px, 4vw, 38px);
       min-height: 240px;
       overflow-wrap: anywhere;
+      white-space: pre-wrap;
     }
 
-    #constitution h1,
-    #constitution h2,
-    #constitution h3 {
-      color: var(--green);
-    }
-
-    #constitution h2 {
-      margin-top: 30px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--gold);
-    }
-
-    #constitution p {
-      margin: 12px 0;
-    }
-
-    .article {
-      margin: 18px 0;
-      padding: 16px;
-      border-right: 4px solid var(--gold);
-      background: #fcfbf7;
-      border-radius: 5px;
-    }
-
-    .article h3 {
-      margin-top: 0;
+    .search-match {
+      outline: 2px solid var(--gold);
+      background: #fff8e5;
     }
 
     footer {
@@ -199,7 +177,11 @@
         background: white;
       }
 
-      header, footer, .tools, .back, #status {
+      header,
+      footer,
+      .tools,
+      .back,
+      #status {
         display: none !important;
       }
 
@@ -215,10 +197,6 @@
 
       #constitution {
         padding: 0;
-      }
-
-      .article {
-        break-inside: avoid;
       }
     }
   </style>
@@ -237,23 +215,24 @@
 
     <section class="document">
       <div class="document-header">
-        <span class="badge">وثيقة دستورية رسمية</span>
+        <span class="badge">وثيقة دستورية</span>
         <h2>دستور مملكة أرض السلام</h2>
         <div class="meta">دستور رقم 001 لسنة 2026</div>
         <div class="meta">العاصمة: دار السلام</div>
+        <div class="meta">اللغتان الرسميتان: العربية والإنجليزية</div>
       </div>
 
       <div class="tools">
         <input
           id="search"
           type="search"
-          placeholder="ابحث داخل نص الدستور..."
-          aria-label="البحث داخل الدستور"
+          placeholder="ابحث عن فصل أو كلمة..."
+          aria-label="البحث في الدستور"
         >
-        <button onclick="window.print()">طباعة الدستور</button>
+        <button id="printButton" type="button">طباعة الدستور</button>
       </div>
 
-      <div id="status">جارٍ تحميل نص الدستور...</div>
+      <div id="status" role="status">جارٍ تحميل الدستور...</div>
       <article id="constitution"></article>
     </section>
   </main>
@@ -263,30 +242,33 @@
   </footer>
 
   <script>
-    /*
-      استعمل إعدادات Supabase الموجودة في موقعك الحالي.
-      لا تضع service_role key هنا؛ استعمل anon/public key فقط.
-    */
-    const SUPABASE_URL = "ضع_رابط_مشروع_Supabase_هنا";
-    const SUPABASE_ANON_KEY = "ضع_مفتاح_anon_الموجود_في_موقعك_هنا";
+    // إعدادات مشروع Supabase
+    const SUPABASE_URL =
+      "https://gfjlglniyaerdcjgefgi.supabase.co";
 
-    const PUBLICATION_ID = "3b2562aa-3c98-4672-b970-f2286f6904fc";
+    // استعمل مفتاح النشر العام الموجود في إعدادات مشروعك.
+    // لا تستعمل service_role key في صفحة عامة.
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_UTEgMhPFF34jjCIeX39Nhg_8Tf_cWiX";
+
+    // معرّف سجل الدستور الموجود في قاعدة البيانات
+    const PUBLICATION_ID =
+      "3b2562aa-3c98-4672-b970-f2286f6904fc";
 
     const constitution = document.getElementById("constitution");
     const statusBox = document.getElementById("status");
     const searchInput = document.getElementById("search");
 
-    async function loadConstitution() {
-      try {
-        if (
-          SUPABASE_URL.includes("ضع_رابط") ||
-          SUPABASE_ANON_KEY.includes("ضع_مفتاح")
-        ) {
-          throw new Error(
-            "يلزم إدخال إعدادات Supabase الموجودة في ملفات موقعك."
-          );
-        }
+    document.getElementById("printButton").addEventListener(
+      "click",
+      () => window.print()
+    );
 
+    async function loadConstitution() {
+      statusBox.hidden = false;
+      statusBox.textContent = "جارٍ تحميل الدستور...";
+
+      try {
         const endpoint =
           SUPABASE_URL.replace(/\/$/, "") +
           "/rest/v1/royal_publications" +
@@ -295,6 +277,7 @@
           "&select=title,content,reference_number";
 
         const response = await fetch(endpoint, {
+          method: "GET",
           headers: {
             "apikey": SUPABASE_ANON_KEY,
             "Authorization": "Bearer " + SUPABASE_ANON_KEY
@@ -303,57 +286,62 @@
 
         if (!response.ok) {
           throw new Error(
-            "تعذّر تحميل الدستور. رمز الخطأ: " + response.status +
-            ". تثبّت من صلاحيات القراءة في Supabase."
+            "تعذّر تحميل الدستور. رمز الخطأ: " +
+            response.status +
+            ". تحقّق من صلاحيات القراءة في Supabase."
           );
         }
 
-        const rows = await response.json();
+        const records = await response.json();
 
-        if (!rows.length || !rows[0].content) {
+        if (!Array.isArray(records) || records.length === 0) {
           throw new Error(
-            "لم يُعثر على نص دستوري منشور بهذا المعرّف."
+            "لم يُعثر على سجل دستور منشور. تحقّق من المعرّف وحالة النشر."
           );
         }
 
-        /*
-          textContent يعرض النص كما هو، دون تشغيل HTML
-          قد يكون موجودًا داخل محتوى الوثيقة.
-        */
-        constitution.textContent = rows[0].content;
+        const record = records[0];
+
+        if (!record.content) {
+          throw new Error(
+            "سجل الدستور موجود، لكن محتوى الدستور فارغ."
+          );
+        }
+
+        // عرض النص بأمان دون تنفيذ أي HTML داخل المحتوى
+        constitution.textContent = record.content;
+
+        if (record.title) {
+          document.title =
+            record.title + " | الجريدة الرسمية";
+        }
+
         statusBox.hidden = true;
       } catch (error) {
+        console.error("Constitution loading error:", error);
+        statusBox.hidden = false;
         statusBox.textContent = error.message;
         statusBox.style.background = "#fff0ed";
         statusBox.style.color = "#8a2d20";
-        console.error(error);
       }
     }
 
     searchInput.addEventListener("input", function () {
-      const query = this.value.trim();
+      const query = this.value.trim().toLocaleLowerCase("ar");
 
-      constitution.querySelectorAll(".search-match").forEach(element => {
-        element.classList.remove("search-match");
-      });
+      constitution.classList.remove("search-match");
 
       if (!query) return;
 
-      const walker = document.createTreeWalker(
-        constitution,
-        NodeFilter.SHOW_TEXT
-      );
+      const text = constitution.textContent.toLocaleLowerCase("ar");
+      const index = text.indexOf(query);
 
-      let node;
-      while ((node = walker.nextNode())) {
-        if (node.nodeValue.toLowerCase().includes(query.toLowerCase())) {
-          node.parentElement?.classList.add("search-match");
-          node.parentElement?.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-          break;
-        }
+      if (index !== -1) {
+        constitution.classList.add("search-match");
+        constitution.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
       }
     });
 
